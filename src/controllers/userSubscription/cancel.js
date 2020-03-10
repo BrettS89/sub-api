@@ -1,0 +1,30 @@
+const UserSubscription = require('../../models/UserSubscription');
+const Handlers = require('../../utils/handlers');
+const userAuth = require('../../utils/userAuth');
+const createError = require('../../utils/createError');
+const userSubService = require('../../services/userSubscription');
+
+module.exports = async (req, res) => {
+	try {
+		const { _id } = await userAuth(req.header('authorization'));
+		const userSubscriptionId = req.params.id;
+		const userSubscription = (
+			await UserSubscription.find({
+				_id: userSubscriptionId,
+				userId: _id,
+			})
+		)[0];
+		if (!userSubscription)
+			throw createError(404, 'No subscription found with this id');
+		userSubscription.active = false;
+		await userSubscription.save();
+		Handlers.success(
+			res,
+			201,
+			{ message: 'subscription cancelled', _id: userSubscriptionId },
+			null
+		);
+	} catch (e) {
+		Handlers.error(res, e, 'createUserSubscription');
+	}
+};
