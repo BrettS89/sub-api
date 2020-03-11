@@ -1,3 +1,4 @@
+const Credit = require('../../models/Credit');
 const Handlers = require('../../utils/handlers');
 const userAuth = require('../../utils/userAuth');
 const createError = require('../../utils/createError');
@@ -6,13 +7,14 @@ module.exports = async (req, res) => {
 	try {
 		const { _id } = await userAuth(req.header('authorization'));
 		const credit = await Credit.findOne({
+			used: false,
 			user: _id,
-			_id: req.params.id,
+			item: req.params.id,
 		});
 		if (!credit) throw createError('Invalid credit');
-		credit.used = false;
-		const usedCredit = await credit.save();
-		Handlers.success(res, 200, { creditId: usedCredit._id });
+		credit.used = true;
+		await credit.save();
+		Handlers.success(res, 200, { itemId: req.params.id });
 	} catch (e) {
 		Handlers.error(res, e, 'useCredit');
 	}

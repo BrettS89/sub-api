@@ -14,5 +14,5 @@ module.exports = async (userId, subscription, userSubscriptionId) => {
 			credits.push(credit);
 		}
 	});
-	Credit.collection.insertMany(credits);
+	await Credit.collection.insertMany(credits);
 };
