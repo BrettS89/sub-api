@@ -18,6 +18,7 @@ const userSubscriptionSchema = new Schema({
 		ref: 'Company',
 		required: true,
 	},
+	lastName: { type: String, requried: true },
 });
 
 module.exports = model('UserSubscription', userSubscriptionSchema);

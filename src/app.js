@@ -3,7 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
-// require routes
+// Starts invoicing
+require('./utils/invoicing');
+
+// Require routes
 const creditRoutes = require('./routes/credit');
 const userSubscriptionRoutes = require('./routes/userSubscription');
 const subscriptionsRoutes = require('./routes/subscriptions');
