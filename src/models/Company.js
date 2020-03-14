@@ -6,6 +6,8 @@ const companySchema = new mongoose.Schema({
 	photo: { type: String, default: null },
 	discount: { type: Number, default: 0.5 },
 	stripeId: { type: String, default: null },
+	published: { type: Boolean, default: false },
+	approved: { type: Boolean, default: false },
 	users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
