@@ -9,7 +9,6 @@ const subscriptionSchema = new mongoose.Schema({
 		required: true,
 	},
 	billingFrequency: { type: String, required: true },
-	billOn: { type: String, required: true },
 	price: { type: Number, required: true },
 	plan: [
 		{

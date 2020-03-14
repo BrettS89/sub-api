@@ -3,4 +3,5 @@ module.exports = {
 	jwtSecret: 'darthVader',
 	subscriptionServerURI: 'tbd',
 	apiKey: 'ayo',
+	geoApiKey: 'AIzaSyAfAwab9eBkHxUkSfAShuzlqcz9OVYBvA0',
 };

@@ -1,6 +1,7 @@
 const Item = require('../../models/Item');
 const Company = require('../../models/Company');
 const Subscription = require('../../models/Subscription');
+const Location = require('../../models/Location');
 const Handlers = require('../../utils/handlers');
 const storeAuth = require('../../utils/storeAuth');
 
@@ -11,8 +12,11 @@ module.exports = async (req, res) => {
 			Item.find({ company }).lean(),
 			Company.findById(company).lean(),
 			Subscription.find({ company }).lean(),
+			Location.find({ company }).lean(),
 		];
-		const [items, companyData, subscriptions] = await Promise.all(promiseArr);
+		const [items, companyData, subscriptions, locations] = await Promise.all(
+			promiseArr
+		);
 
 		const subscriptionArr = subscriptions.map(sub => {
 			const subPlan = sub.plan.map(i => {
@@ -33,7 +37,12 @@ module.exports = async (req, res) => {
 		Handlers.success(
 			res,
 			200,
-			{ items, company: companyData, subscriptions: subscriptionArr },
+			{
+				items,
+				company: companyData,
+				subscriptions: subscriptionArr,
+				locations,
+			},
 			null
 		);
 	} catch (e) {

@@ -7,8 +7,8 @@ module.exports = async (req, res) => {
 		const { company } = await storeAuth(req.header('authorization'));
 		req.body.company = company;
 		const subscription = await subService.createSubInstance(req.body);
-		await subscription.save();
-		Handlers.success(res, 201, { message: 'Subscription created' }, null);
+		const createdSubscription = await subscription.save();
+		Handlers.success(res, 201, { subscription: createdSubscription });
 	} catch (e) {
 		Handlers.error(res, e, 'createSubscription');
 	}
