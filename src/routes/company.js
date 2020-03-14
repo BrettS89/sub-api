@@ -6,5 +6,7 @@ router.patch('/addbankaccount', Controllers.addBankAccount);
 router.patch('/edit', Controllers.editCompany);
 router.get('/getdashboard', Controllers.getDashboard);
 router.get('/getone/:id', Controllers.getOne);
+router.patch('/publish', Controllers.publishCompany);
+router.patch('/unpublish', Controllers.unpublishCompany);
 
 module.exports = router;

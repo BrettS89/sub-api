@@ -3,6 +3,8 @@ const addBankAccount = require('./addBankAccount');
 const editCompany = require('./edit');
 const getOne = require('./getOne');
 const getDashboard = require('./getDashboard');
+const publishCompany = require('./publish');
+const unpublishCompany = require('./unpublish');
 
 module.exports = {
 	addBankAccount,
@@ -10,4 +12,6 @@ module.exports = {
 	editCompany,
 	getOne,
 	getDashboard,
+	publishCompany,
+	unpublishCompany,
 };
