@@ -17,10 +17,11 @@ module.exports = async (req, res) => {
 		];
 		const [user, subscription] = await Promise.all(promiseArr);
 		const userSubscription = await UserSubscription.find({
-			user: _id,
+			userId: _id,
 			company: subscription.company,
 			active: true,
 		});
+		console.log(userSubscription);
 		if (userSubscription.length)
 			throw createError(
 				400,

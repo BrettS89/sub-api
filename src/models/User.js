@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
 	cardType: { type: String, default: null },
 	cardLast4: { type: String, defualt: null },
 	isAdmin: { type: Boolean, default: false },
+	firstSubscription: { type: Boolean, default: true },
 	company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
 });
 

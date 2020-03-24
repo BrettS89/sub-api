@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
 		});
 		if (!credit) throw createError('Invalid credit');
 		credit.used = true;
-		await credit.save();
+		const newCredit = await credit.save();
 		Handlers.success(res, 200, { itemId: req.params.id });
 	} catch (e) {
 		Handlers.error(res, e, 'useCredit');
