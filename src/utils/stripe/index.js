@@ -32,3 +32,10 @@ exports.processPayment = (customerId, amount) => {
 		customer: customerId,
 	});
 };
+
+exports.getCompanyStripeId = authCode => {
+	return stripe.oauth.token({
+		grant_type: 'authorization_code',
+		code: authCode,
+	});
+};
