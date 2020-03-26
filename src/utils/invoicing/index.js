@@ -1,4 +1,5 @@
 const schedule = require('node-schedule');
+const Credit = require('../../models/Credit');
 const UserSubscription = require('../../models/UserSubscription');
 const stripe = require('../stripe');
 const addCredits = require('../../utils/addCredits');
@@ -52,6 +53,7 @@ async function invoice() {
 				// USE STRIPE CONNECT?
 				// bill customer
 				// pay company
+				await Credit.remove({ userSubscription: s._id });
 				await addCredits(s.userId._id, s.subscription, s._id);
 			} catch (e) {
 				console.log(e);

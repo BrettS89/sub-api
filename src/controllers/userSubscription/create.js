@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
 			company: subscription.company,
 			active: true,
 		});
-		console.log(userSubscription);
 		if (userSubscription.length)
 			throw createError(
 				400,
@@ -49,8 +48,16 @@ module.exports = async (req, res) => {
 			.save();
 
 		/*
-				BILL USERS HERE
+			BILL USERS HERE
 		*/
+
+		if (user.firstSubscription) {
+			// BILL YOUR OWN COMPANY HERE
+			user.firstSubscription = false;
+			await user.save();
+		} else {
+			// NORMALLY BILL HERE
+		}
 
 		await addCredits(_id, subscription, createdSubscription._id);
 		Handlers.success(res, 201, { userSubscription: createdSubscription }, null);

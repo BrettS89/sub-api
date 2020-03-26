@@ -1,4 +1,5 @@
 const UserSubscription = require('../../models/UserSubscription');
+const Credit = require('../../models/Credit');
 const Handlers = require('../../utils/handlers');
 const userAuth = require('../../utils/userAuth');
 const createError = require('../../utils/createError');
@@ -18,6 +19,7 @@ module.exports = async (req, res) => {
 			throw createError(404, 'No subscription found with this id');
 		userSubscription.active = false;
 		await userSubscription.save();
+		await Credit.remove({ userSubscription: userSubscription._id });
 		Handlers.success(
 			res,
 			201,
