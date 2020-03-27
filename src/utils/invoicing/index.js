@@ -3,6 +3,7 @@ const Credit = require('../../models/Credit');
 const UserSubscription = require('../../models/UserSubscription');
 const stripe = require('../stripe');
 const addCredits = require('../../utils/addCredits');
+const getIsoDate = require('../../utils/getIsoDate');
 
 schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 0 }, () => {
 	invoice();
@@ -44,19 +45,19 @@ async function invoice() {
 		.sort('lastName')
 		.populate('subscription')
 		.populate('company')
-		.populate('userId', ['_id', 'stripeId', 'lastName'])
+		.populate('userId', ['_id', 'email', 'stripeId', 'lastName'])
 		.skip(usersProcessed);
 
 	while (userSubscriptions.length) {
 		userSubscriptions.forEach(async s => {
-			try {
-				// USE STRIPE CONNECT?
-				// bill customer
-				// pay company
-				await Credit.remove({ userSubscription: s._id });
-				await addCredits(s.userId._id, s.subscription, s._id);
-			} catch (e) {
-				console.log(e);
+			if (s.isoDate !== getIsoDate()) {
+				try {
+					await Credit.remove({ userSubscription: s._id });
+					await stripe.billUser(s.price, s.userId.stripeId, s.company.stripeId);
+					await addCredits(s.userId._id, s.subscription, s._id);
+				} catch (e) {
+					console.log(e);
+				}
 			}
 		});
 
