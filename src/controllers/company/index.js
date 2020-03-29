@@ -5,6 +5,7 @@ const getOne = require('./getOne');
 const getDashboard = require('./getDashboard');
 const publishCompany = require('./publish');
 const unpublishCompany = require('./unpublish');
+const subscriptionReport = require('./subscriptionReport');
 
 module.exports = {
 	addBankAccount,
@@ -14,4 +15,5 @@ module.exports = {
 	getDashboard,
 	publishCompany,
 	unpublishCompany,
+	subscriptionReport,
 };

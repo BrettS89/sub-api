@@ -8,5 +8,6 @@ router.get('/getdashboard', Controllers.getDashboard);
 router.get('/getone/:id', Controllers.getOne);
 router.patch('/publish', Controllers.publishCompany);
 router.patch('/unpublish', Controllers.unpublishCompany);
+router.get('/subscriptionreport', Controllers.subscriptionReport);
 
 module.exports = router;
