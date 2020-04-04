@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(
 	cors({
 		origin: '*',
-		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+		methods: ['GET', 'POST', 'post', 'PUT', 'PATCH', 'DELETE'],
 	})
 );
 

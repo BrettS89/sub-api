@@ -7,10 +7,8 @@ exports.hashPassword = password => {
 	return bcrypt.hashSync(password, 10);
 };
 
-exports.createUserInstance = ({ email, password, firstName, lastName }) => {
+exports.createUserInstance = ({ email, password }) => {
 	return new User({
-		firstName,
-		lastName,
 		email,
 		password,
 	});
