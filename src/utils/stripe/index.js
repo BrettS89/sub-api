@@ -26,7 +26,7 @@ exports.updateCustomer = (customerId, source) => {
 	});
 };
 
-exports.getCompanyStripeId = authCode => {
+exports.getCompanyStripeId = (authCode) => {
 	return stripe.oauth.token({
 		grant_type: 'authorization_code',
 		code: authCode,
@@ -35,6 +35,7 @@ exports.getCompanyStripeId = authCode => {
 
 exports.billUser = async (amount, customerId, companyId) => {
 	const transferAmount = calculateCompanyPayment(amount);
+	console.log(amount, transferAmount);
 	await stripe.paymentIntents.create({
 		payment_method_types: ['card'],
 		amount: amount * 100,
