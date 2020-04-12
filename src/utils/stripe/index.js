@@ -35,7 +35,6 @@ exports.getCompanyStripeId = (authCode) => {
 
 exports.billUser = async (amount, customerId, companyId) => {
 	const transferAmount = calculateCompanyPayment(amount);
-	console.log(amount, transferAmount);
 	await stripe.paymentIntents.create({
 		payment_method_types: ['card'],
 		amount: amount * 100,
