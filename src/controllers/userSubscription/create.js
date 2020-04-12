@@ -1,3 +1,4 @@
+const keys = require('../../config');
 const Subscription = require('../../models/Subscription');
 const User = require('../../models/User');
 const Company = require('../../models/Company');
@@ -59,7 +60,7 @@ module.exports = async (req, res) => {
 		} else {
 			await stripe.billUser(
 				subscription.price,
-				user.stripeId,
+				keys.internalStripeId,
 				company.stripeId
 			);
 		}
