@@ -17,7 +17,7 @@ schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 2 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 3 }, () => {
+schedule.scheduleJob({ hour: 19, minute: 38, dayOfWeek: 3 }, () => {
 	invoice();
 });
 
@@ -34,6 +34,8 @@ schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 6 }, () => {
 });
 
 async function invoice() {
+	console.log('in');
+	console.time('Invoice');
 	const weekDay = new Date().toString().split(' ')[0];
 	const date = new Date().toString().split(' ')[2];
 
@@ -49,7 +51,7 @@ async function invoice() {
 		.skip(usersProcessed);
 
 	while (userSubscriptions.length) {
-		userSubscriptions.forEach(async s => {
+		userSubscriptions.forEach(async (s) => {
 			if (s.isoDate !== getIsoDate()) {
 				try {
 					await Credit.remove({ userSubscription: s._id });
@@ -72,4 +74,5 @@ async function invoice() {
 			.populate('userId', ['stripeId', 'lastName'])
 			.skip(usersProcessed);
 	}
+	console.timeEnd('Invoice');
 }
