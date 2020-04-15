@@ -34,7 +34,7 @@ schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 6 }, () => {
 });
 
 async function invoice() {
-	console.log('in');
+	console.log('inn');
 	console.time('Invoice');
 	const weekDay = new Date().toString().split(' ')[0];
 	const date = new Date().toString().split(' ')[2];
