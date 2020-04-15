@@ -17,7 +17,7 @@ schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 2 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 23, minute: 51, dayOfWeek: 3 }, () => {
+schedule.scheduleJob({ hour: 23, minute: 55, dayOfWeek: 3 }, () => {
 	invoice();
 });
 
@@ -49,7 +49,7 @@ async function invoice() {
 		.populate('company')
 		.populate('userId', ['_id', 'email', 'stripeId', 'lastName'])
 		.skip(usersProcessed);
-
+	console.log(userSubscriptions);
 	while (userSubscriptions.length) {
 		userSubscriptions.forEach(async (s) => {
 			if (s.isoDate !== getIsoDate()) {
