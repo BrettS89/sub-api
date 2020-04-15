@@ -17,7 +17,7 @@ schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 2 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 23, minute: 44, dayOfWeek: 3 }, () => {
+schedule.scheduleJob({ hour: 23, minute: 47, dayOfWeek: 3 }, () => {
 	invoice();
 });
 
