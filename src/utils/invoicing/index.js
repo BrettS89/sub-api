@@ -5,37 +5,35 @@ const stripe = require('../stripe');
 const addCredits = require('../../utils/addCredits');
 const getIsoDate = require('../../utils/getIsoDate');
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 0 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 0 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 1 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 1 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 2 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 2 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 3 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 3 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 3, dayOfWeek: 4 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 4 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 5 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 5 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 6 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 6 }, () => {
 	invoice();
 });
 
 async function invoice() {
-	console.log('inn');
-	console.time('Invoice');
 	const weekDay = new Date().toString().split(' ')[0];
 	const date = new Date().toString().split(' ')[2];
 
@@ -49,11 +47,9 @@ async function invoice() {
 		.populate('company')
 		.populate('userId', ['_id', 'email', 'stripeId', 'lastName'])
 		.skip(usersProcessed);
-	console.log(userSubscriptions);
 	while (userSubscriptions.length) {
 		userSubscriptions.forEach(async (s) => {
-			// if (s.isoDate !== getIsoDate()) {
-			if (true) {
+			if (s.isoDate !== getIsoDate()) {
 				try {
 					await Credit.remove({ userSubscription: s._id });
 					await stripe.billUser(s.price, s.userId.stripeId, s.company.stripeId);
