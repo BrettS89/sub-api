@@ -17,11 +17,11 @@ schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 2 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 23, minute: 55, dayOfWeek: 3 }, () => {
+schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 3 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 0, minute: 1, dayOfWeek: 4 }, () => {
+schedule.scheduleJob({ hour: 0, minute: 3, dayOfWeek: 4 }, () => {
 	invoice();
 });
 
@@ -52,7 +52,8 @@ async function invoice() {
 	console.log(userSubscriptions);
 	while (userSubscriptions.length) {
 		userSubscriptions.forEach(async (s) => {
-			if (s.isoDate !== getIsoDate()) {
+			// if (s.isoDate !== getIsoDate()) {
+			if (true) {
 				try {
 					await Credit.remove({ userSubscription: s._id });
 					await stripe.billUser(s.price, s.userId.stripeId, s.company.stripeId);
