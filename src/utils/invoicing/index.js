@@ -25,7 +25,7 @@ schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 4 }, () => {
 	invoice();
 });
 
-schedule.scheduleJob({ hour: 2, minute: 25, dayOfWeek: 5 }, () => {
+schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 5 }, () => {
 	invoice();
 });
 
@@ -34,7 +34,6 @@ schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 6 }, () => {
 });
 
 async function invoice() {
-	console.log('in');
 	const weekDay = new Date().toString().split(' ')[0];
 	const date = new Date().toString().split(' ')[2];
 
@@ -72,5 +71,4 @@ async function invoice() {
 			.populate('userId', ['stripeId', 'lastName'])
 			.skip(usersProcessed);
 	}
-	console.timeEnd('Invoice');
 }
