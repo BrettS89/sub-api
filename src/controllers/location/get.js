@@ -7,7 +7,8 @@ module.exports = async (req, res) => {
 			-74.03599,
 			40.71626
 		);
-		const formattedCopmanies = locations.map(l => {
+		console.log(locations);
+		const formattedCopmanies = locations.map((l) => {
 			return {
 				_id: l._id.company[0]._id,
 				company: l._id.company[0],

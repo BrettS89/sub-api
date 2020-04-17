@@ -15,6 +15,7 @@ const userRoutes = require('./routes/user');
 const locationRoutes = require('./routes/location');
 const itemRoutes = require('./routes/item');
 const companyRoutes = require('./routes/company');
+const dashboardRoutes = require('./routes/dashboard');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -28,6 +29,7 @@ app.use(
 );
 
 // use routes
+app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/credit', creditRoutes);
 app.use('/api/usersubscription', userSubscriptionRoutes);
 app.use('/api/location', locationRoutes);
