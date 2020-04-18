@@ -4,7 +4,6 @@ const s3 = require('../../utils/s3');
 
 module.exports = async (req, res) => {
 	try {
-		const { company } = await storeAuth(req.header('authorization'));
 		const { name, type } = req.query;
 		const { url, key } = await s3.getSignedUrl(type, `${company}/${name}`);
 		Handlers.success(res, 200, { url, key });
