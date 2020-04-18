@@ -8,7 +8,7 @@ const s3 = new AWS.S3({
 
 exports.getSignedUrl = async (fileType, key) => {
 	const url = await s3.getSignedUrl('putObject', {
-		Bucket: keys.bucketName,
+		Bucket: keys.s3Bucket,
 		Key: key,
 		ContentType: 'image/' + fileType,
 	});
