@@ -1,5 +1,5 @@
-module.exports = amount => {
+module.exports = (amount) => {
 	const twelvePointNinePercent = amount * 0.129;
 	const value = (amount - twelvePointNinePercent - 0.3).toFixed(2);
-	return value * 100;
+	return Math.round(value * 100);
 };

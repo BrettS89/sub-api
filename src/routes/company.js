@@ -9,5 +9,6 @@ router.get('/getone/:id', Controllers.getOne);
 router.patch('/publish', Controllers.publishCompany);
 router.patch('/unpublish', Controllers.unpublishCompany);
 router.get('/subscriptionreport', Controllers.subscriptionReport);
+router.get('/getuploadphotourl', Controllers.getUploadPhotoUrl);
 
 module.exports = router;

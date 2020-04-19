@@ -26,7 +26,7 @@ exports.updateCustomer = (customerId, source) => {
 	});
 };
 
-exports.getCompanyStripeId = authCode => {
+exports.getCompanyStripeId = (authCode) => {
 	return stripe.oauth.token({
 		grant_type: 'authorization_code',
 		code: authCode,

@@ -9,6 +9,7 @@ const companySchema = new mongoose.Schema({
 	stripeId: { type: String, default: null },
 	published: { type: Boolean, default: false },
 	approved: { type: Boolean, default: false },
+	subscriptions: { type: Number, default: 0 },
 	users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 

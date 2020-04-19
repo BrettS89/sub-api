@@ -12,10 +12,24 @@ exports.getLocations = (lon, lat) => {
 		{
 			$lookup: {
 				from: 'companies',
-				localField: 'company',
-				foreignField: '_id',
+				let: { id: '$company' },
+				pipeline: [
+					{
+						$match: {
+							$expr: {
+								$and: [
+									{ $eq: ['$_id', '$$id'] },
+									{ $eq: ['$published', true] },
+								],
+							},
+						},
+					},
+				],
 				as: 'company',
 			},
+		},
+		{
+			$match: { company: { $ne: [] } },
 		},
 		{ $group: { _id: { company: '$company' }, doc: { $first: '$$ROOT' } } },
 	]).limit(50);
