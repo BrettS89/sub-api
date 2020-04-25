@@ -16,9 +16,9 @@ module.exports = async (req, res) => {
 				item: itemId,
 			}),
 		];
-
+		console.log(userSubscriptionId);
 		const [userSubscription, credit] = await Promise.all(promiseArr);
-
+		console.log(userSubscription);
 		if (!credit) throw createError('Invalid credit');
 		credit.used = true;
 		await credit.save();
