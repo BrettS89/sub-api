@@ -73,6 +73,7 @@ module.exports = async (req, res) => {
 				name: subName,
 				items: subItems,
 				userSubscriptionId: s._id,
+				cancelledBySpot: s.cancelledBySpot,
 			};
 		});
 
