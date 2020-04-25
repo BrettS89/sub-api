@@ -7,6 +7,7 @@ const createError = require('../../utils/createError');
 module.exports = async (req, res) => {
 	try {
 		const { _id } = await userAuth(req.header('authorization'));
+		console.log(req.body);
 		const { itemId, userSubscriptionId } = req.body;
 		const promiseArr = [
 			UserSubscription.findById(userSubscriptionId),
@@ -16,9 +17,7 @@ module.exports = async (req, res) => {
 				item: itemId,
 			}),
 		];
-		console.log(userSubscriptionId);
 		const [userSubscription, credit] = await Promise.all(promiseArr);
-		console.log(userSubscription);
 		if (!credit) throw createError('Invalid credit');
 		credit.used = true;
 		await credit.save();

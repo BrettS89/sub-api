@@ -7,6 +7,7 @@ const createError = require('../../utils/createError');
 
 module.exports = async (req, res) => {
 	try {
+		console.log(req.body);
 		const { _id } = await userAuth(req.header('authorization'));
 		const promiseArr = [
 			Credit.find({
@@ -23,9 +24,9 @@ module.exports = async (req, res) => {
 				.populate('subscription')
 				.populate('company', ['name']),
 		];
-
+		console.log('in');
 		let [credits, userSubscriptions] = await Promise.all(promiseArr);
-
+		console.log('in2');
 		// Check spotCancelledSubscriptions
 		const subsToRemove = [];
 		const spotsToCancel = [];
