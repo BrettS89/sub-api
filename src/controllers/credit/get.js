@@ -23,18 +23,18 @@ module.exports = async (req, res) => {
 			.populate('subscription')
 			.populate('company', ['name']);
 
-		const companies = userSubscriptions.map(s => s.company._id);
+		const companies = userSubscriptions.map((s) => s.company._id);
 		const items = await Item.find({ company: { $in: companies } });
 
-		const finalArr = userSubscriptions.map(s => {
+		const finalArr = userSubscriptions.map((s) => {
 			const subName = `${s.company.name} ${s.subscription.name}`;
-			const subItems = s.subscription.plan.map(i => {
+			const subItems = s.subscription.plan.map((i) => {
 				const item = items.find(
-					itm => itm._id.toString() === i.item.toString()
+					(itm) => itm._id.toString() === i.item.toString()
 				);
 
 				const creditsLeft = credits.filter(
-					c =>
+					(c) =>
 						c.userSubscription.toString() === s._id.toString() &&
 						c.item._id.toString() === item._id.toString()
 				).length;
@@ -48,6 +48,7 @@ module.exports = async (req, res) => {
 			return {
 				name: subName,
 				items: subItems,
+				userSubscriptionId: s._id,
 			};
 		});
 

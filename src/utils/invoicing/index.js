@@ -47,9 +47,10 @@ async function invoice() {
 		.populate('company')
 		.populate('userId', ['_id', 'email', 'stripeId', 'lastName'])
 		.skip(usersProcessed);
+
 	while (userSubscriptions.length) {
 		userSubscriptions.forEach(async (s) => {
-			if (s.isoDate !== getIsoDate()) {
+			if (s.isoDate !== getIsoDate() && !s.cancelledBySpot) {
 				try {
 					await Credit.remove({ userSubscription: s._id });
 					await stripe.billUser(s.price, s.userId.stripeId, s.company.stripeId);
