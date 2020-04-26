@@ -8,22 +8,23 @@ module.exports = async (req, res) => {
 		const company = (await companyService.getOneCompanyQuery(req.params.id))[0];
 		if (!company) throw createError(404, 'No company found with this id');
 		const items = await Item.find({ company: company._id });
-		company.subscriptions = company.subscriptions.map(s => {
-			const plan = s.plan.map(i => {
-				const item = items.find(itm => {
-					// console.log(itm._id, i.item);
-					return itm._id.toString() === i.item.toString();
+		company.subscriptions = company.subscriptions
+			.map((s) => {
+				const plan = s.plan.map((i) => {
+					const item = items.find((itm) => {
+						return itm._id.toString() === i.item.toString();
+					});
+					return {
+						item,
+						quantity: i.quantity,
+					};
 				});
 				return {
-					item,
-					quantity: i.quantity,
+					...s,
+					plan,
 				};
-			});
-			return {
-				...s,
-				plan,
-			};
-		});
+			})
+			.filter((s) => s.active);
 
 		Handlers.success(res, 200, { company }, null);
 	} catch (e) {
