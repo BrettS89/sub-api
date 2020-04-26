@@ -6,7 +6,7 @@ const createError = require('../../utils/createError');
 
 module.exports = async (req, res) => {
 	try {
-		const { company } = await storeAuth(req.headers('authorization'));
+		const { company } = await storeAuth(req.header('authorization'));
 		const { id } = req.params;
 		const subscription = await Subscription.findById(id);
 		if (!subscription)
