@@ -24,9 +24,9 @@ module.exports = async (req, res) => {
 				.populate('subscription')
 				.populate('company', ['name']),
 		];
-		console.log('in');
+
 		let [credits, userSubscriptions] = await Promise.all(promiseArr);
-		console.log('in2');
+
 		// Check spotCancelledSubscriptions
 		const subsToRemove = [];
 		const spotsToCancel = [];
