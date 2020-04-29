@@ -7,7 +7,6 @@ const createError = require('../../utils/createError');
 module.exports = async (req, res) => {
 	try {
 		const { _id } = await userAuth(req.header('authorization'));
-		console.log(req.body);
 		const { itemId, userSubscriptionId } = req.body;
 		const promiseArr = [
 			UserSubscription.findById(userSubscriptionId),
