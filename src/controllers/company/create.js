@@ -10,10 +10,16 @@ module.exports = async (req, res) => {
 		const user = await User.findById(_id);
 		if (user.company)
 			throw createError(400, 'This user is already associated with a company');
+		if (!req.body.acceptedTerms) {
+			throw createError(
+				400,
+				'You must agree to the partner agreement and privacy policy'
+			);
+		}
 		const newCompany = new Company(req.body);
 		const tags = req.body.tags
 			.split(' ')
-			.map(t => {
+			.map((t) => {
 				return t.replace(/\W/g, '').toLowerCase();
 			})
 			.join(' ');
