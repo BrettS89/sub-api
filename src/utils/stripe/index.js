@@ -47,3 +47,7 @@ exports.billUser = async (amount, customerId, companyId) => {
 		},
 	});
 };
+
+exports.getDashboardLink = async (accountId) => {
+	return await stripe.accounts.createLoginLink(accountId);
+};
