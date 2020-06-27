@@ -70,6 +70,8 @@ module.exports = async (req, res) => {
 			.save();
 
 		await addCredits(_id, subscription, createdSubscription._id);
+		createdSubscription.subscription = subscription;
+		createdSubscription.company = company;
 		Handlers.success(res, 201, { userSubscription: createdSubscription }, null);
 	} catch (e) {
 		Handlers.error(res, e, 'createUserSubscription');
