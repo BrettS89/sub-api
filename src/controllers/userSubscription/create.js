@@ -3,6 +3,7 @@ const Subscription = require('../../models/Subscription');
 const User = require('../../models/User');
 const Company = require('../../models/Company');
 const UserSubscription = require('../../models/UserSubscription');
+const Invoice = require('../../models/Invoice');
 const Handlers = require('../../utils/handlers');
 const userAuth = require('../../utils/userAuth');
 const createError = require('../../utils/createError');
@@ -48,21 +49,23 @@ module.exports = async (req, res) => {
 			req.body.billOn === '28';
 
 		// BILLS CUSTOMER OR PARADYSE:
-
+		let charged = null;
 		if (user.firstSubscription) {
-			await stripe.billUser(
-				subscription.price,
-				user.stripeId,
-				company.stripeId
-			);
-			user.firstSubscription = false;
-			await user.save();
-		} else {
 			await stripe.billUser(
 				subscription.price,
 				keys.internalStripeId,
 				company.stripeId
 			);
+			user.firstSubscription = false;
+			await user.save();
+			charged = 0;
+		} else {
+			await stripe.billUser(
+				subscription.price,
+				user.stripeId,
+				company.stripeId
+			);
+			charged = subscription.price;
 		}
 
 		const createdSubscription = await userSubService
@@ -70,6 +73,15 @@ module.exports = async (req, res) => {
 			.save();
 
 		await addCredits(_id, subscription, createdSubscription._id);
+		const invoice = new Invoice({
+			user: user._id,
+			company: company._id,
+			subscription: subscription._id,
+			userSubscription: createdSubscription._id,
+			price: subscription.price,
+			charged,
+		});
+		await invoice.save();
 		createdSubscription.subscription = subscription;
 		createdSubscription.company = company;
 		Handlers.success(res, 201, { userSubscription: createdSubscription }, null);

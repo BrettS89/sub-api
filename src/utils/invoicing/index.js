@@ -1,6 +1,7 @@
 const schedule = require('node-schedule');
 const Credit = require('../../models/Credit');
 const UserSubscription = require('../../models/UserSubscription');
+const Invoice = require('../../models/Invoice');
 const stripe = require('../stripe');
 const addCredits = require('../../utils/addCredits');
 const getIsoDate = require('../../utils/getIsoDate');
@@ -55,6 +56,15 @@ async function invoice() {
 					await Credit.remove({ userSubscription: s._id });
 					await stripe.billUser(s.price, s.userId.stripeId, s.company.stripeId);
 					await addCredits(s.userId._id, s.subscription, s._id);
+					const createdInvoice = new Invoice({
+						user: s.userId._id,
+						company: s.company._id,
+						subscription: s.subscription._id,
+						userSubscription: s._id,
+						price: s.price,
+						charged: s.price,
+					});
+					await createdInvoice.save();
 				} catch (e) {
 					console.log(e);
 				}
