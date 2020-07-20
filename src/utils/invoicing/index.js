@@ -5,6 +5,7 @@ const Invoice = require('../../models/Invoice');
 const stripe = require('../stripe');
 const addCredits = require('../../utils/addCredits');
 const getIsoDate = require('../../utils/getIsoDate');
+const emailReport = require('../../utils/sendgrid').sendBillingErrorReport;
 
 schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 0 }, () => {
 	invoice();
@@ -35,6 +36,8 @@ schedule.scheduleJob({ hour: 7, minute: 1, dayOfWeek: 6 }, () => {
 });
 
 async function invoice() {
+	let report = '';
+	let errors = 0;
 	const weekDay = new Date().toString().split(' ')[0];
 	const date = new Date().toString().split(' ')[2];
 
@@ -51,11 +54,15 @@ async function invoice() {
 
 	while (userSubscriptions.length) {
 		userSubscriptions.forEach(async (s) => {
+			let status = '';
 			if (s.isoDate !== getIsoDate() && !s.cancelledBySpot) {
 				try {
 					await Credit.remove({ userSubscription: s._id });
+					status += 'credits removed ';
 					await stripe.billUser(s.price, s.userId.stripeId, s.company.stripeId);
+					status += 'user billed ';
 					await addCredits(s.userId._id, s.subscription, s._id);
+					status += 'credits added';
 					const createdInvoice = new Invoice({
 						user: s.userId._id,
 						company: s.company._id,
@@ -65,7 +72,10 @@ async function invoice() {
 						charged: s.price,
 					});
 					await createdInvoice.save();
+					status += 'invoice created';
 				} catch (e) {
+					report += `${s.userId.email}\n${status}\n${e.message}\nUser subscription ${s._id}\n \n`;
+					errors++;
 					console.log(e);
 				}
 			}
@@ -82,4 +92,5 @@ async function invoice() {
 			.populate('userId', ['stripeId', 'lastName'])
 			.skip(usersProcessed);
 	}
+	await emailReport(report, errors.toString());
 }

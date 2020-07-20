@@ -15,13 +15,16 @@ module.exports = async (req, res) => {
 		if (!subscription)
 			throw createError(404, 'No subscription found with this id');
 		subscription.active = false;
-		await subscription.save();
-		await foundCompany.save();
-		await UserSubscription.update(
-			{ subscription: subscription._id },
-			{ cancelledBySpot: true },
-			{ multi: true }
-		);
+		const promiseArr = [
+			subscription.save(),
+			foundCompany.save(),
+			UserSubscription.update(
+				{ subscription: subscription._id },
+				{ cancelledBySpot: true },
+				{ multi: true }
+			),
+		];
+		await Promise.all(promiseArr);
 		Handlers.success(res, 200, { message: 'Subscription cancelled' });
 	} catch (e) {
 		Handlers.error(res, e, 'cancelSubscription');

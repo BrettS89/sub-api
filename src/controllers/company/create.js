@@ -28,8 +28,8 @@ module.exports = async (req, res) => {
 		const promises = [newCompany.save()];
 		const [company] = await Promise.all(promises);
 		user.company = company._id;
-		await user.save();
-		Handlers.success(res, 201, { company }, null);
+		const updatedUser = await user.save();
+		Handlers.success(res, 201, { company, user: updatedUser }, null);
 	} catch (e) {
 		Handlers.error(res, e, 'createCompany');
 	}

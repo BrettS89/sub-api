@@ -11,3 +11,13 @@ exports.submitContactForm = async (email, message) => {
 	};
 	await sgMail.send(msg);
 };
+
+exports.sendBillingErrorReport = async (content, errorNum) => {
+	const msg = {
+		to: 'brett@paradyse.app',
+		from: 'brett@paradyse.app',
+		subject: `Billing report: ${errorNum} errors`,
+		text: `Errors occured for the following ${errorNum} users: \n ${content}`,
+	};
+	await sgMail.send(msg);
+};
