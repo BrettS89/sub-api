@@ -6,5 +6,6 @@ router.post('/login', Controllers.login);
 router.get('/isloggedin', Controllers.isLoggedIn);
 router.patch('/addcreditcard', Controllers.addCreditCard);
 router.post('/contact', Controllers.contactUs);
+router.post('/sendtoken', Controllers.sendToken);
 
 module.exports = router;

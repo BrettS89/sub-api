@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 const keys = require('../../config');
 
-exports.hashPassword = password => {
+exports.hashPassword = (password) => {
 	return bcrypt.hashSync(password, 10);
 };
 
@@ -14,6 +14,6 @@ exports.createUserInstance = ({ email, password }) => {
 	});
 };
 
-exports.createToken = _id => {
+exports.createToken = (_id) => {
 	return jwt.sign({ _id }, keys.jwtSecret);
 };
