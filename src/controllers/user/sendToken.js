@@ -3,12 +3,21 @@ const twilio = require('../../utils/twilio');
 const User = require('../../models/User');
 const Handlers = require('../../utils/handlers');
 const userAuth = require('../../utils/userAuth');
+const createError = require('../../utils/createError');
 
 module.exports = async (req, res) => {
 	try {
 		const user = await userAuth(req.header('authorization'));
-		const foundUser = await User.findById(user._id);
 		const phoneNumber = req.body.phoneNumber;
+		const [foundUser, existingAccount] = await Promise.all([
+			User.findById(user._id),
+			User.find({ phoneNumber }),
+		]);
+		// if (existingAccount.length)
+		// 	throw createError(
+		// 		401,
+		// 		'An account with this phone number already exists.'
+		// 	);
 		const secret = speakeasy.generateSecret({ length: 20 });
 		const phoneToken = speakeasy.totp({
 			secret: secret.base32,

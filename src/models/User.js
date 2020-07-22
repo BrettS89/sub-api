@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+	activated: { type: Boolean, default: false },
 	cardLast4: { type: String, defualt: null },
 	cardType: { type: String, default: null },
 	company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
