@@ -11,4 +11,6 @@ module.exports = {
 	s3SecretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
 	s3Bucket: process.env.S3_BUCKET,
 	s3Key: process.env.S3_KEY,
+	twilioAccountSid: process.env.TWILIO_ACCOUNT_SID,
+	twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
 };
