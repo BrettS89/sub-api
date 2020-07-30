@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
 	isAdmin: { type: Boolean, default: false },
 	lastName: { type: String, required: false },
 	password: { type: String, required: true },
-	phoneNumber: { type: String, unique: true },
+	phoneNumber: { type: String, default: null },
 	secret: { type: String, default: null },
 	stripeId: { type: String, default: null },
 });

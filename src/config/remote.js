@@ -1,5 +1,6 @@
 module.exports = {
 	mongoURI: process.env.MONGO_URI,
+	mongoTestURI: 'mongodb://localhost:27017/paradyse-test',
 	jwtSecret: process.env.JWT_SECRET,
 	subscriptionServerURI: process.env.SUBSCRIPTION_SERVER_URI,
 	stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,

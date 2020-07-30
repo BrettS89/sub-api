@@ -33,8 +33,8 @@ exports.getCompanyStripeId = (authCode) => {
 	});
 };
 
-exports.billUser = async (amount, customerId, companyId) => {
-	const transferAmount = calculateCompanyPayment(amount);
+exports.billUser = async (amount, customerId, companyStripeId, companyId) => {
+	const transferAmount = calculateCompanyPayment(amount, companyId);
 	await stripe.paymentIntents.create({
 		payment_method_types: ['card'],
 		amount: amount * 100,
@@ -43,7 +43,7 @@ exports.billUser = async (amount, customerId, companyId) => {
 		customer: customerId,
 		transfer_data: {
 			amount: transferAmount,
-			destination: companyId,
+			destination: companyStripeId,
 		},
 	});
 };

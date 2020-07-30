@@ -54,7 +54,8 @@ module.exports = async (req, res) => {
 			await stripe.billUser(
 				subscription.price,
 				keys.internalStripeId,
-				company.stripeId
+				company.stripeId,
+				company._id
 			);
 			user.firstSubscription = false;
 			await user.save();
@@ -63,7 +64,8 @@ module.exports = async (req, res) => {
 			await stripe.billUser(
 				subscription.price,
 				user.stripeId,
-				company.stripeId
+				company.stripeId,
+				company._id
 			);
 			charged = subscription.price;
 		}

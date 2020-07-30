@@ -7,7 +7,6 @@ const createError = require('../../utils/createError');
 
 module.exports = async (req, res) => {
 	try {
-		console.log(req.body);
 		const { _id } = await userAuth(req.header('authorization'));
 		const promiseArr = [
 			Credit.find({

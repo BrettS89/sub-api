@@ -59,7 +59,12 @@ async function invoice() {
 				try {
 					await Credit.remove({ userSubscription: s._id });
 					status += 'credits removed ';
-					await stripe.billUser(s.price, s.userId.stripeId, s.company.stripeId);
+					await stripe.billUser(
+						s.price,
+						s.userId.stripeId,
+						s.company.stripeId,
+						s.company._id
+					);
 					status += 'user billed ';
 					await addCredits(s.userId._id, s.subscription, s._id);
 					status += 'credits added';
