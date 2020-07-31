@@ -10,10 +10,16 @@ module.exports = async (req, res) => {
 		const user = await User.findById(_id);
 		if (user.company)
 			throw createError(400, 'This user is already associated with a company');
+		if (!req.body.acceptedTerms) {
+			throw createError(
+				400,
+				'You must agree to the partner agreement and privacy policy'
+			);
+		}
 		const newCompany = new Company(req.body);
 		const tags = req.body.tags
 			.split(' ')
-			.map(t => {
+			.map((t) => {
 				return t.replace(/\W/g, '').toLowerCase();
 			})
 			.join(' ');
@@ -22,8 +28,8 @@ module.exports = async (req, res) => {
 		const promises = [newCompany.save()];
 		const [company] = await Promise.all(promises);
 		user.company = company._id;
-		await user.save();
-		Handlers.success(res, 201, { company }, null);
+		const updatedUser = await user.save();
+		Handlers.success(res, 201, { company, user: updatedUser }, null);
 	} catch (e) {
 		Handlers.error(res, e, 'createCompany');
 	}

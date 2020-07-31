@@ -10,5 +10,6 @@ router.patch('/publish', Controllers.publishCompany);
 router.patch('/unpublish', Controllers.unpublishCompany);
 router.get('/subscriptionreport', Controllers.subscriptionReport);
 router.get('/getuploadphotourl', Controllers.getUploadPhotoUrl);
+router.get('/stripedashboardlink', Controllers.getStripeDashboardLink);
 
 module.exports = router;

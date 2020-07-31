@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const companySchema = new mongoose.Schema({
 	createdAt: { type: Date, default: new Date() },
+	acceptedTerms: { type: Boolean, required: true },
 	name: { type: String, required: true },
 	photo: { type: String, default: null },
 	tags: { type: String, default: '' },

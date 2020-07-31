@@ -11,10 +11,11 @@ exports.getSignedUrl = async (fileType, key) => {
 		Bucket: keys.s3Bucket,
 		Key: key,
 		ContentType: fileType,
+		ACL: 'public-read',
 	});
 
 	return {
 		url,
-		key: `${keys.s3Key}/${key}`,
+		key: `${keys.s3Key}${key}`,
 	};
 };

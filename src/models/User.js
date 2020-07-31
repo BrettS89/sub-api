@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-	firstName: { type: String, required: false },
-	lastName: { type: String, required: false },
-	email: { type: String, required: true, unique: true },
-	password: { type: String, required: true },
-	stripeId: { type: String, default: null },
-	cardType: { type: String, default: null },
+	activated: { type: Boolean, default: false },
 	cardLast4: { type: String, defualt: null },
-	isAdmin: { type: Boolean, default: false },
-	firstSubscription: { type: Boolean, default: true },
+	cardType: { type: String, default: null },
 	company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+	createdAt: { type: Date, default: new Date() },
+	email: { type: String, required: true, unique: true },
+	firstName: { type: String, required: false },
+	firstSubscription: { type: Boolean, default: true },
+	isAdmin: { type: Boolean, default: false },
+	lastName: { type: String, required: false },
+	password: { type: String, required: true },
+	phoneNumber: { type: String, default: null },
+	secret: { type: String, default: null },
+	stripeId: { type: String, default: null },
 });
 
 module.exports = mongoose.model('User', userSchema);

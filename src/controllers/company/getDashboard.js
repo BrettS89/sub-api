@@ -11,16 +11,16 @@ module.exports = async (req, res) => {
 		const promiseArr = [
 			Item.find({ company }).lean(),
 			Company.findById(company).lean(),
-			Subscription.find({ company }).lean(),
+			Subscription.find({ company, active: true }).lean(),
 			Location.find({ company }).lean(),
 		];
 		const [items, companyData, subscriptions, locations] = await Promise.all(
 			promiseArr
 		);
 
-		const subscriptionArr = subscriptions.map(sub => {
-			const subPlan = sub.plan.map(i => {
-				const item = items.find(itm => {
+		const subscriptionArr = subscriptions.map((sub) => {
+			const subPlan = sub.plan.map((i) => {
+				const item = items.find((itm) => {
 					return itm._id.toString() === i.item.toString();
 				});
 				return {

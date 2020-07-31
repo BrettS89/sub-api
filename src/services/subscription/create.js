@@ -1,6 +1,6 @@
 const Subscription = require('../../models/Subscription');
 
-exports.createSubInstance = data => {
+exports.createSubInstance = (data) => {
 	return new Subscription({
 		name: data.name,
 		company: data.company,
@@ -9,5 +9,6 @@ exports.createSubInstance = data => {
 		price: data.price,
 		plan: data.plan,
 		photo: data.photo,
+		description: data.description,
 	});
 };

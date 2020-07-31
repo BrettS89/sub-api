@@ -1,5 +1,6 @@
 module.exports = {
 	mongoURI: process.env.MONGO_URI,
+	mongoTestURI: 'mongodb://localhost:27017/paradyse-test',
 	jwtSecret: process.env.JWT_SECRET,
 	subscriptionServerURI: process.env.SUBSCRIPTION_SERVER_URI,
 	stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
@@ -11,4 +12,6 @@ module.exports = {
 	s3SecretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
 	s3Bucket: process.env.S3_BUCKET,
 	s3Key: process.env.S3_KEY,
+	twilioAccountSid: process.env.TWILIO_ACCOUNT_SID,
+	twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
 };

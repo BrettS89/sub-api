@@ -21,6 +21,8 @@ const subscriptionSchema = new mongoose.Schema({
 		},
 	],
 	photo: { type: String, default: null },
+	description: { type: String, default: null },
+	active: { type: Boolean, default: true },
 });
 
 module.exports = mongoose.model('Subscription', subscriptionSchema);

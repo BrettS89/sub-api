@@ -7,6 +7,7 @@ const publishCompany = require('./publish');
 const unpublishCompany = require('./unpublish');
 const subscriptionReport = require('./subscriptionReport');
 const getUploadPhotoUrl = require('./getUploadPhotoUrl');
+const getStripeDashboardLink = require('./getDashboardLink');
 
 module.exports = {
 	addBankAccount,
@@ -18,4 +19,5 @@ module.exports = {
 	unpublishCompany,
 	subscriptionReport,
 	getUploadPhotoUrl,
+	getStripeDashboardLink,
 };
