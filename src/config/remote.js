@@ -14,4 +14,5 @@ module.exports = {
 	s3Key: process.env.S3_KEY,
 	twilioAccountSid: process.env.TWILIO_ACCOUNT_SID,
 	twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
+	mixpanelToken: process.env.MIXPANEL_TOKEN,
 };

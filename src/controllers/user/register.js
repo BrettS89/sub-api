@@ -1,6 +1,7 @@
 const User = require('../../models/User');
 const Handlers = require('../../utils/handlers');
 const userService = require('../../services/user');
+const twilio = require('../../utils/twilio');
 
 module.exports = async (req, res) => {
 	try {
@@ -15,6 +16,7 @@ module.exports = async (req, res) => {
 		req.body.password = hashedPassword;
 		const user = await userService.createUserInstance(req.body).save();
 		const token = userService.createToken(user._id);
+		twilio.notifyMe('A new user signed up to Paraydse!');
 		Handlers.success(res, 201, { token, user }, null);
 	} catch (e) {
 		Handlers.error(res, e, 'register');

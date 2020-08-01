@@ -3,6 +3,7 @@ const UserSubscription = require('../../models/UserSubscription');
 const Handlers = require('../../utils/handlers');
 const userAuth = require('../../utils/userAuth');
 const createError = require('../../utils/createError');
+const mixpanel = require('../../utils/mixpanel');
 
 module.exports = async (req, res) => {
 	try {
@@ -37,7 +38,9 @@ module.exports = async (req, res) => {
 				await Promise.all(promiseArr2);
 			}
 		}
-
+		mixpanel.track('credit used', {
+			distinct_id: _id,
+		});
 		Handlers.success(res, 200, { itemId });
 	} catch (e) {
 		Handlers.error(res, e, 'useCredit');

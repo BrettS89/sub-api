@@ -10,6 +10,8 @@ const createError = require('../../utils/createError');
 const userSubService = require('../../services/userSubscription');
 const addCredits = require('../../utils/addCredits');
 const stripe = require('../../utils/stripe');
+const mixpanel = require('../../utils/mixpanel');
+const twilio = require('../../utils/twilio');
 
 module.exports = async (req, res) => {
 	try {
@@ -86,7 +88,11 @@ module.exports = async (req, res) => {
 		await invoice.save();
 		createdSubscription.subscription = subscription;
 		createdSubscription.company = company;
+		twilio.notifyMe('A user purchased a subscription!');
 		Handlers.success(res, 201, { userSubscription: createdSubscription }, null);
+		mixpanel.track('user subscribed', {
+			distinct_id: user._id,
+		});
 	} catch (e) {
 		Handlers.error(res, e, 'createUserSubscription');
 	}

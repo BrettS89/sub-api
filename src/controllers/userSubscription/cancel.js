@@ -4,6 +4,7 @@ const Handlers = require('../../utils/handlers');
 const userAuth = require('../../utils/userAuth');
 const createError = require('../../utils/createError');
 const userSubService = require('../../services/userSubscription');
+const mixpanel = require('../../utils/mixpanel');
 
 module.exports = async (req, res) => {
 	try {
@@ -26,6 +27,9 @@ module.exports = async (req, res) => {
 			{ message: 'subscription cancelled', _id: userSubscriptionId },
 			null
 		);
+		mixpanel.track('cancel subscription', {
+			distinct_id: _id,
+		});
 	} catch (e) {
 		Handlers.error(res, e, 'createUserSubscription');
 	}
